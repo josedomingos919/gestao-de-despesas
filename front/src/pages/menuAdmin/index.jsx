@@ -32,7 +32,7 @@ export const MenuAdmin = () => {
             <a href="/add-dispesa">Criar Dispesas</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/list-dispesa">Listar Dispesas</a>
+            <a href="/listar-dispesa">Listar Dispesas</a>
           </ListGroupItem>
           <ListGroupItem>
             <a href="">Criar Moradores</a>
