@@ -1,0 +1,7 @@
+Administrador
+ -> Cadastrar Dispesa
+ -> Cadastrar Moradores
+
+ Moradore
+  -> Pagar dispesas [CAHSE | DINHEIRO NA CONTA]
+  -> Depositar saldo na conta
