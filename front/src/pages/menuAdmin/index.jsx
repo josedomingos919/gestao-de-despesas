@@ -35,10 +35,10 @@ export const MenuAdmin = () => {
             <a href="/listar-dispesa">Listar Dispesas</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="">Criar Moradores</a>
+            <a href="/add-usuario">Criar Moradores</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="">Listar Moradores</a>
+            <a href="/listar-moradores">Listar Moradores</a>
           </ListGroupItem>
           <ListGroupItem>
             <a href="/perfil">Meu Perfil</a>
