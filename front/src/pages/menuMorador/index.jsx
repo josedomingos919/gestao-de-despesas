@@ -1,7 +1,5 @@
 import {
   FormGroup,
-  Input,
-  Label,
   Card,
   Button,
   ListGroup,
@@ -10,7 +8,7 @@ import {
   Col,
 } from "reactstrap";
 
-export const MenuAdmin = () => {
+export const MenuMorador = () => {
   return (
     <div className="center-element">
       <Card
@@ -29,22 +27,18 @@ export const MenuAdmin = () => {
 
         <ListGroup>
           <ListGroupItem>
-            <a href="/add-dispesa">Criar Dispesas</a>
+            <a href="/conta">Conta</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/listar-dispesa">Listar Dispesas</a>
+            <a href="/list-dispesa">Dispesas</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="">Criar Moradores</a>
-          </ListGroupItem>
-          <ListGroupItem>
-            <a href="">Listar Moradores</a>
+            <a href="/pagar-dispesa">Pagar dispesa</a>
           </ListGroupItem>
           <ListGroupItem>
             <a href="/perfil">Meu Perfil</a>
           </ListGroupItem>
         </ListGroup>
-
         <Row className="mt-3">
           <Col>
             <Button

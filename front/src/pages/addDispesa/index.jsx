@@ -31,6 +31,10 @@ export const AddDispesa = () => {
           <Input type="date" />
         </FormGroup>
         <FormGroup>
+          <Label>Tipo</Label>
+          <Select isMulti={true} options={usuarios} />
+        </FormGroup>
+        <FormGroup>
           <Label>Descrição</Label>
           <Input type="textarea" />
         </FormGroup>
