@@ -11,10 +11,16 @@ import {
 import { AddUserDTO } from './dto/addUserDto';
 import { UserService } from './user.service';
 import { UpdateUserDTO } from './dto/updateUserDto';
+import { LoginDTO } from './dto/loginDto';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Post('login')
+  login(@Body() data: LoginDTO) {
+    return this.userService.login(data);
+  }
 
   @Post()
   add(@Body() data: AddUserDTO) {

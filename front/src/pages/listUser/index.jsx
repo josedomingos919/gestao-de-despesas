@@ -1,149 +1,102 @@
-import { FormGroup, Input, Label, Card, Button, Table } from "reactstrap";
+import { useEffect, useState } from "react";
+import { FormGroup, Card, Button, Table } from "reactstrap";
+
+import axios from "axios";
 
 export const ListarMorador = () => {
-    return (
-        <div className="center-element">
-            <Card
-                style={{
-                    maxWidth: 600,
-                    width: "100%",
-                    marginTop: 40,
-                    background: "#F1F3F4",
-                }}
-                className="p-3"
-            >
-                <FormGroup>
-                    <h3>Listar Moradores</h3>
-                    <hr />
-                </FormGroup>
-                <FormGroup>
-                    <Table
-                        striped>
-                        <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    Nome
-                                </th>
-                                <th>
-                                    E-mail
-                                </th>
-                                <th>
-                                    Tipo
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    1
-                                </th>
-                                <td>
-                                    Mark
-                                </td>
-                                <td>
-                                    Otto
-                                </td>
-                                <td>
-                                    @mdo
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="primary"
-                                    >
-                                        Editar
-                                    </Button>
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="danger"
-                                    >
-                                        Eliminar
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    2
-                                </th>
-                                <td>
-                                    Jacob
-                                </td>
-                                <td>
-                                    Thornton
-                                </td>
-                                <td>
-                                    @fat
-                                </td>
+  const [users, setUsers] = useState([]);
 
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="primary"
-                                    >
-                                        Editar
-                                    </Button>
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="danger"
-                                    >
-                                        Eliminar
-                                    </Button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    3
-                                </th>
-                                <td>
-                                    Larry
-                                </td>
-                                <td>
-                                    the Bird
-                                </td>
-                                <td>
-                                    @twitter
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="primary"
-                                    >
-                                        Editar
-                                    </Button>
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() => (window.location.href = "/admin")}
-                                        color="danger"
-                                    >
-                                        Eliminar
-                                    </Button>
-                                </td>
-                            </tr>
+  const getAll = async () => {
+    const response = await axios.get("http://localhost:3333/user");
 
+    setUsers(response?.data || []);
+  };
 
-                        </tbody>
-                    </Table>
+  const handleDelete = async (id) => {
+    if (!confirm("Tem certeza de que quer eliminar um item ?")) return;
 
-                </FormGroup>
+    const response = await axios.delete("http://localhost:3333/user/" + id);
 
-                <FormGroup>
+    if (response?.status == 200) {
+      alert("Eliminado com sucesso!");
+    } else {
+      alert("Falha ao eliminar, tente mais tarde!");
+    }
 
-                </FormGroup>
+    getAll();
+  };
 
-                <FormGroup>
+  useEffect(() => {
+    getAll();
+  }, []);
 
-                </FormGroup>
-
-
-            </Card>
-        </div>
-    )
-}
+  return (
+    <div className="center-element">
+      <Card
+        style={{
+          maxWidth: 700,
+          width: "100%",
+          marginTop: 40,
+          background: "#F1F3F4",
+        }}
+        className="p-3"
+      >
+        <FormGroup>
+          <h3>Listar Utilizadores</h3>
+          <hr />
+        </FormGroup>
+        <FormGroup>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.length ? (
+                users.map((user) => {
+                  return (
+                    <tr>
+                      <th scope="row">{user?.id}</th>
+                      <td>{user?.name}</td>
+                      <td>{user?.email}</td>
+                      <td>{user?.tipo}</td>
+                      <td>
+                        <Button
+                          onClick={() => (window.location.href = "/admin")}
+                          color="primary"
+                        >
+                          Editar
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          onClick={() => handleDelete(user?.id)}
+                          color="danger"
+                        >
+                          Eliminar
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    Nenhum usuário encontrado!
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </FormGroup>
+        <FormGroup>
+          <Button onClick={() => history.go(-1)}>Voltar</Button>
+        </FormGroup>
+      </Card>
+    </div>
+  );
+};

@@ -1,7 +1,5 @@
 import {
   FormGroup,
-  Input,
-  Label,
   Card,
   Button,
   ListGroup,
@@ -9,8 +7,16 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useApp } from "../../context";
 
 export const MenuAdmin = () => {
+  const { user } = useApp();
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
+
   return (
     <div className="center-element">
       <Card
@@ -35,10 +41,10 @@ export const MenuAdmin = () => {
             <a href="/listar-dispesa">Listar Dispesas</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/add-usuario">Criar Moradores</a>
+            <a href="/add-usuario">Criar Utilizador</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/listar-moradores">Listar Moradores</a>
+            <a href="/listar-moradores">Listar Utilizador</a>
           </ListGroupItem>
           <ListGroupItem>
             <a href="/perfil">Meu Perfil</a>
@@ -47,15 +53,14 @@ export const MenuAdmin = () => {
 
         <Row className="mt-3">
           <Col>
-            <Button
-              onClick={() => (window.location.href = "/login")}
-              color="danger"
-            >
+            <Button onClick={logout} color="danger">
               Sair
             </Button>
           </Col>
           <Col>
-            <div style={{ textAlign: "right" }}>José Ndonge</div>
+            <div style={{ textAlign: "right" }}>
+              {user?.name} | {user?.email}
+            </div>
           </Col>
         </Row>
       </Card>

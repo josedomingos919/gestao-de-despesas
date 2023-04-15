@@ -56,10 +56,7 @@ export const AddDispesa = () => {
           >
             Salvar
           </Button>
-          <Button
-            onClick={() => (window.location.href = "/admin")}
-            color="danger"
-          >
+          <Button onClick={() => history.go(-1)} color="danger">
             Cancelar
           </Button>
         </FormGroup>

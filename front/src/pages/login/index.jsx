@@ -1,6 +1,33 @@
+import axios from "axios";
+
+import { useState } from "react";
 import { FormGroup, Input, Label, Card, Button } from "reactstrap";
+import { tipoUsuario } from "../addUser";
 
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSave = async () => {
+    if (!email) return alert("Campo email é obrigatório!");
+    if (!password) return alert("Campo senha é obrigatório!");
+
+    const response = await axios.post("http://localhost:3333/user/login", {
+      email,
+      password,
+    });
+
+    if (response.status === 201) {
+      localStorage.setItem("user", JSON.stringify(response?.data));
+
+      if (response.data.tipo == tipoUsuario[0].value)
+        window.location.href = "/admin";
+      else window.location.href = "/menu-morador";
+    } else {
+      alert("Usuário ou senha incorrecta tente mais tarde!");
+    }
+  };
+
   return (
     <div className="center-element">
       <Card
@@ -17,23 +44,23 @@ export const Login = () => {
           <hr />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail">Email</Label>
-          <Input id="exampleEmail" name="email" placeholder="" type="email" />
+          <Label>Email</Label>
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+          />
         </FormGroup>
         <FormGroup>
-          <Label for="examplePassword">Senha</Label>
+          <Label>Senha</Label>
           <Input
-            id="examplePassword"
-            name="password"
-            placeholder=""
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
         </FormGroup>
         <FormGroup>
-          <Button
-            onClick={() => (window.location.href = "/admin")}
-            color="success"
-          >
+          <Button onClick={handleSave} color="success">
             Entrar
           </Button>
         </FormGroup>

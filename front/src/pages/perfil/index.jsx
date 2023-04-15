@@ -57,6 +57,9 @@ export const Perfil = () => {
           >
             Salvar
           </Button>
+          <Button style={{ marginLeft: 10 }} onClick={() => history.go(-1)}>
+            Voltar
+          </Button>
         </FormGroup>
       </Card>
     </div>
