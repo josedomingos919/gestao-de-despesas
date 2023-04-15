@@ -1,13 +1,38 @@
 import { FormGroup, Input, Label, Card, Button, Table } from "reactstrap";
 
 import Select from "react-select";
-
-export const tipoDespesa = [
-  { value: "1", label: "Recorrente" },
-  { value: "0", label: "Extraordinária" },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useApp } from "../../context";
 
 export const ListarDespesa = () => {
+  const [dispesas, setDispesas] = useState([]);
+
+  const getAll = async () => {
+    const response = await axios.get("http://localhost:3333/dispesa");
+
+    setDispesas(response?.data || []);
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Tem certeza de que quer eliminar um item ?")) return;
+
+    const response = await axios.delete("http://localhost:3333/dispesa/" + id);
+
+    if (response?.status == 200) {
+      alert("Eliminado com sucesso!");
+    } else {
+      alert("Falha ao eliminar, tente mais tarde!");
+    }
+
+    getAll();
+  };
+
+  useEffect(() => {
+    getAll();
+  }, []);
+
+
   return (
     <div className="center-element">
       <Card
@@ -20,7 +45,7 @@ export const ListarDespesa = () => {
         className="p-3"
       >
         <FormGroup>
-          <h3>Listar Despesa</h3>
+          <h3>Listar Dispesa</h3>
           <hr />
         </FormGroup>
         <FormGroup>
@@ -30,39 +55,45 @@ export const ListarDespesa = () => {
                 <th>#</th>
                 <th>Descrição</th>
                 <th>Data</th>
-                <th>Nome do usuário</th>
+                <th>Tipo</th>
+                <th>Morador</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo2</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@fat2</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-              </tr>
+              {dispesas.length ? (
+                dispesas.map((dispesa) => {
+                  return (
+                    <tr>
+                      <th scope="row">{dispesa?.id}</th>
+                      <td>{dispesa?.descricao}</td>
+                      <td>{dispesa?.data}</td>
+                      <td>{dispesa?.tipo}</td>
+                      <td>{dispesa?.usuario?.name}</td>
+                      <td>{dispesa?.total}</td>
+
+                      <td>
+                        <Button
+                          onClick={() => handleDelete(dispesa?.id)}
+                          color="danger"
+                        >
+                          Eliminar
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    Nenhuma dispesa encontrada!
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </FormGroup>
-        <FormGroup>
-          <Label>Tipo de Despesa</Label>
-          <Select options={tipoDespesa} defaultValue={tipoDespesa[0]} />
-        </FormGroup>
+
         <FormGroup>
           <Button onClick={() => history.go(-1)}>Voltar</Button>
         </FormGroup>

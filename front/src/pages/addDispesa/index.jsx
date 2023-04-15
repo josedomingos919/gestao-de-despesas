@@ -41,6 +41,7 @@ export const AddDispesa = () => {
         descricao,
         total: total / selectedMoradores.length,
         usuarioId: selectedMoradores[i]?.value,
+        tipo: tipo?.value,
       });
     }
 

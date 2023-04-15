@@ -3,4 +3,5 @@ export class AddDispesaDTO {
     descricao: string;
     total: number;
     usuarioId: number;
+    tipo: string;
 }

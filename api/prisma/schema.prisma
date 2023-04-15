@@ -31,10 +31,5 @@ model Despesa {
   usuarioId Int
   usuario   Usuario  @relation(fields: [usuarioId], references: [id])
   total     Decimal
-}
-
-model DespesasPagas {
-  id             Int    @id @default(autoincrement())
-  despesaId      Int
-  formaPagamento String
+  tipo      String?
 }
