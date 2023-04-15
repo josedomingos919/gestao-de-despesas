@@ -5,40 +5,57 @@ import { UpdateContaDTO } from './dto/updateContaDto';
 
 @Injectable()
 export class ContaService {
-    constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-    async add(data: AddContaDTO) {
-        const conta = await this.prisma.conta.create({
-            data,
-        });
+  async add(data: AddContaDTO) {
+    const conta = await this.prisma.conta.create({
+      data,
+    });
 
-        return conta;
+    return conta;
+  }
+
+  async getAll() {
+    const contas = await this.prisma.conta.findMany();
+
+    return contas;
+  }
+
+  async getByUser(userId: number) {
+    let conta = await this.prisma.conta.findFirst({
+      where: {
+        usuarioId: userId,
+      },
+    });
+
+    if (!conta?.id) {
+      conta = await this.add({
+        saldo: 0,
+        usuarioId: userId,
+      });
     }
 
-    async getAll() {
-        const contas = await this.prisma.conta.findMany();
+    return conta;
+  }
 
-        return contas;
-    }
+  async update(data: UpdateContaDTO) {
+    const conta = await this.prisma.conta.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    });
 
-    async update(data: UpdateContaDTO) {
-        const conta = await this.prisma.conta.update({
-            where: {
-                id: data.id,
-            },
-            data,
-        });
+    return conta;
+  }
 
-        return conta;
-    }
+  async remove(id: number) {
+    const conta = await this.prisma.conta.delete({
+      where: {
+        id,
+      },
+    });
 
-    async remove(id: number) {
-        const conta = await this.prisma.conta.delete({
-            where: {
-                id,
-            },
-        });
-
-        return conta;
-    }
+    return conta;
+  }
 }

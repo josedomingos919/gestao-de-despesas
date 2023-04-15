@@ -10,14 +10,28 @@ export class UserService {
 
   async add(data: AddUserDTO) {
     const user = await this.prisma.usuario.create({
-      data,
+      data: {
+        ...data,
+        Conta: {
+          create: [
+            {
+              saldo: 0,
+            },
+          ],
+        },
+      },
     });
 
     return user;
   }
 
   async getAll() {
-    const users = await this.prisma.usuario.findMany();
+    const users = await this.prisma.usuario.findMany({
+      include: {
+        Conta: true,
+        Despesa: true,
+      },
+    });
 
     return users;
   }
@@ -39,6 +53,10 @@ export class UserService {
     const user = await this.prisma.usuario.findUnique({
       where: {
         id,
+      },
+      include: {
+        Conta: true,
+        Despesa: true,
       },
     });
 
