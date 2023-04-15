@@ -20,6 +20,10 @@ export class UserService {
           ],
         },
       },
+      include: {
+        Conta: true,
+        Despesa: true,
+      },
     });
 
     return user;
@@ -44,6 +48,10 @@ export class UserService {
         id: data.id,
       },
       data,
+      include: {
+        Conta: true,
+        Despesa: true,
+      },
     });
 
     return user;
@@ -68,6 +76,10 @@ export class UserService {
       where: {
         id,
       },
+      include: {
+        Conta: true,
+        Despesa: true,
+      },
     });
 
     return user;
@@ -78,6 +90,10 @@ export class UserService {
       where: {
         email: data.email,
         senha: data.password,
+      },
+      include: {
+        Conta: true,
+        Despesa: true,
       },
     });
 
