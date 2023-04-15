@@ -1,6 +1,40 @@
-import { FormGroup, Input, Label, Card, Button, Table } from "reactstrap";
+import { useEffect, useState } from "react";
+import { FormGroup, Input, Label, Card, Button } from "reactstrap";
+import { useApp } from "../../context";
+
+import axios from "axios";
 
 export const Conta = () => {
+  const { user } = useApp();
+
+  const [conta, setConta] = useState({});
+  const [saldo, setSaldo] = useState(0);
+
+  const getAccountData = async () => {
+    const response = await axios.get("http://localhost:3333/conta/" + user?.id);
+
+    setSaldo(response?.data?.saldo || 0);
+    setConta(response?.data || {});
+  };
+
+  useEffect(() => {
+    if (user?.id) getAccountData();
+  }, [user]);
+
+  const handleSave = async () => {
+    const response = await axios.put("http://localhost:3333/conta", {
+      ...conta,
+      saldo,
+    });
+
+    if (response.status === 200) {
+      alert("Saldo atualizado com sucesso!");
+      history.go(-1);
+    } else {
+      alert("Falha ao atualizar o saldo!");
+    }
+  };
+
   return (
     <div className="center-element">
       <Card
@@ -18,9 +52,13 @@ export const Conta = () => {
         </FormGroup>
         <FormGroup>
           <Label>Saldo</Label>
-          <Input type="number" />
+          <Input
+            type="number"
+            value={saldo}
+            onChange={(e) => setSaldo(e?.target?.value)}
+          />
         </FormGroup>
-        <hr />
+        {/* <hr />
         <h5 className="p-2">Histórico</h5>
         <FormGroup>
           <Table>
@@ -39,12 +77,9 @@ export const Conta = () => {
               </tr>
             </tbody>
           </Table>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup>
-          <Button
-            onClick={() => (window.location.href = "/admin")}
-            color="success"
-          >
+          <Button onClick={handleSave} color="success">
             Salvar
           </Button>
         </FormGroup>

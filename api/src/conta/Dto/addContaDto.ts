@@ -1,5 +1,4 @@
 export class AddContaDTO {
-    saldo: number;
-    usuarioId: number;
+  saldo: number;
+  usuarioId: number;
 }
-
