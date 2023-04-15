@@ -39,9 +39,7 @@ export const AddUser = () => {
 
     if (response?.status === 201) {
       alert("Usuário criado com sucesso!");
-
-      if (user?.tipo == tipoUsuario[0]?.value) window.location.href = "/admin";
-      else window.location.href = "/menu-morador";
+      history.go(-1);
     } else {
       alert("Falha ao criar usuário, tente mais tarde!");
     }
