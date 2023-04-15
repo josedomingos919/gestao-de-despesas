@@ -23,11 +23,23 @@ export class UserService {
   }
 
   async update(data: UpdateUserDTO) {
+    data.id = +data?.id;
+
     const user = await this.prisma.usuario.update({
       where: {
         id: data.id,
       },
       data,
+    });
+
+    return user;
+  }
+
+  async getOne(id: number) {
+    const user = await this.prisma.usuario.findUnique({
+      where: {
+        id,
+      },
     });
 
     return user;

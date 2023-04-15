@@ -26,7 +26,7 @@ function App() {
           <Route path="/listar-dispesa" element={<ListarDespesa />} />
           <Route path="/listar-moradores" element={<ListarMorador />} />
           <Route path="/menu-morador" element={<MenuMorador />} />
-          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/perfil/:id" element={<Perfil />} />
           <Route path="*" element={() => "Página não encontrada"} />
         </Routes>
       </BrowserRouter>

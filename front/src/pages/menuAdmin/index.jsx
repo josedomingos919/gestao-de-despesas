@@ -47,10 +47,9 @@ export const MenuAdmin = () => {
             <a href="/listar-moradores">Listar Utilizador</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/perfil">Meu Perfil</a>
+            <a href={"/perfil/" + user?.id}>Meu Perfil</a>
           </ListGroupItem>
         </ListGroup>
-
         <Row className="mt-3">
           <Col>
             <Button onClick={logout} color="danger">

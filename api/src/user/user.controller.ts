@@ -32,6 +32,11 @@ export class UserController {
     return this.userService.update(data);
   }
 
+  @Get('/:id')
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.getOne(id);
+  }
+
   @Get()
   getAll() {
     return this.userService.getAll();

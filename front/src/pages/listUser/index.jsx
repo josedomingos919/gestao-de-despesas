@@ -66,7 +66,9 @@ export const ListarMorador = () => {
                       <td>{user?.tipo}</td>
                       <td>
                         <Button
-                          onClick={() => (window.location.href = "/admin")}
+                          onClick={() =>
+                            (window.location.href = "/perfil/" + user?.id)
+                          }
                           color="primary"
                         >
                           Editar
