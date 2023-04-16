@@ -67,7 +67,7 @@ export const ListarDespesa = () => {
                     <tr>
                       <th scope="row">{dispesa?.id}</th>
                       <td>{dispesa?.descricao}</td>
-                      <td>{dispesa?.data}</td>
+                      <td>{new Date(dispesa?.data).toLocaleDateString()}</td>
                       <td>{dispesa?.tipo}</td>
                       <td>{dispesa?.usuario?.name}</td>
                       <td>{dispesa?.total}</td>

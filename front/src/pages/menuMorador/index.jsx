@@ -7,8 +7,11 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useApp } from "../../context";
 
 export const MenuMorador = () => {
+  const { user } = useApp();
+
   return (
     <div className="center-element">
       <Card
@@ -36,7 +39,7 @@ export const MenuMorador = () => {
             <a href="/pagar-dispesa">Pagar dispesa</a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href="/perfil">Meu Perfil</a>
+            <a href={"/perfil/" + user?.id}>Meu Perfil</a>
           </ListGroupItem>
         </ListGroup>
         <Row className="mt-3">
@@ -49,7 +52,9 @@ export const MenuMorador = () => {
             </Button>
           </Col>
           <Col>
-            <div style={{ textAlign: "right" }}>José Ndonge</div>
+            <div style={{ textAlign: "right" }}>
+              {user?.name} | {user?.email}
+            </div>
           </Col>
         </Row>
       </Card>
