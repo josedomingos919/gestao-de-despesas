@@ -14,6 +14,7 @@ export class DispesaService {
                 descricao: data.descricao,
                 total: data.total,
                 usuarioId: data.usuarioId,
+                tipo: data.tipo,
             },
         });
 
@@ -21,7 +22,11 @@ export class DispesaService {
     }
 
     async getAll() {
-        const dispesas = await this.prisma.despesa.findMany();
+        const dispesas = await this.prisma.despesa.findMany({
+            include: {
+                usuario: true
+            }
+        });
 
         return dispesas;
     }
@@ -44,6 +49,7 @@ export class DispesaService {
                 data: new Date(data.data).toISOString(),
                 descricao: data.descricao,
                 total: data.total,
+                tipo: data.tipo,
             },
         });
 

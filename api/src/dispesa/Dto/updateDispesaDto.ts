@@ -3,4 +3,5 @@ export class UpdateDispesaDTO {
     data: Date;
     descricao: string;
     total: number;
+    tipo: string;
 }
